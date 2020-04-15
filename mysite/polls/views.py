@@ -4,8 +4,7 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 
-from .models import Choice, Question
-
+from .models import Choice, Question, Contact
 
 class IndexView(generic.ListView):
     template_name = 'polls/index.html'
@@ -24,6 +23,15 @@ class DetailView(generic.DetailView):
 class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
+
+class ContactsView(generic.DetailView):
+    model = Contact
+    template_name = 'polls/contact.html'
+
+def contact(request, member):
+    member = get_object_or_404(Contact, member=member)
+    return render(request, 'polls/detail.html', {'question': question})
+
 
 def detail(request, question_id):
     question = get_object_or_404(Question, pk=question_id)
